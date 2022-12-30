@@ -1,0 +1,39 @@
+<div class="raw">
+  <div class="col-xs-12 col-md-6 col-md-offset-3">
+    <form [formGroup]="authenticationForm" (submit)="onSubmit()">
+      <div class="form-group">
+        <label>Email</label>
+        <input
+          type="email"
+          class="form-control"
+          formControlName="email"
+          (blur)="checkFormValidity()"
+        />
+        <span class="error-mesaage">{{ formErrors["email"] }}</span>
+      </div>
+      <div class="form-group">
+        <label>password</label>
+        <input
+          type="password"
+          class="form-control"
+          formControlName="password"
+          (blur)="checkFormValidity()"
+        />
+        <span class="error-mesaage">{{ formErrors["password"] }}</span>
+      </div>
+      <div>
+        <button
+          class="btn btn-primary"
+          type="submit"
+          [disabled]="authenticationForm.invalid"
+        >
+          {{ isLoginMode ? "Login" : "Sign Up" }}
+        </button>
+        |
+        <button class="btn btn-primary" (click)="switchToLogin()">
+          Switch To {{ isLoginMode ? "Sign Up" : "Login" }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

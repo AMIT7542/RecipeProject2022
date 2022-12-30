@@ -1,0 +1,75 @@
+<div class="row">
+  <div class="col-xs-12">
+    <form #ingredientForm="ngForm" (ngSubmit)="addItem(ingredientForm)">
+      <div class="row">
+        <div class="col-sm-5 form-group">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            id="name"
+            class="form-control"
+            name="name"
+            ngModel
+            required
+            #name="ngModel"
+            pattern="^[a-zA-Z ]+$"
+          />
+          <span
+            *ngIf="name.invalid && (name.touched || name.dirty)"
+            class="error-mesaage"
+          >
+            <span *ngIf="name?.errors?.['required']">Name is required </span>
+            <span *ngIf="name?.errors?.['pattern']"
+              >please enter valid name</span
+            >
+          </span>
+        </div>
+
+        <div class="col-sm-2 form-group">
+          <label>Amount</label>
+          <input
+            class="form-control"
+            name="amount"
+            ngModel
+            #amount="ngModel"
+            required
+            pattern="^[1-9]+[0-9]*$"
+          />
+          <span
+            *ngIf="amount.invalid && (amount.touched || amount.dirty)"
+            class="error-mesaage"
+          >
+            <span *ngIf="amount?.errors?.['required']">
+              Amount is required
+            </span>
+            <span *ngIf="amount?.errors?.['pattern']">
+              Enter Valid Amount
+            </span>
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <button
+            class="btn btn-success"
+            type="submit"
+            [disabled]="ingredientForm.invalid"
+          >
+            {{ editMode ? "Edit" : "Add" }}
+          </button>
+          <button
+            class="btn btn-danger"
+            type="button"
+            *ngIf="editMode"
+            (click)="deleteIngredient()"
+          >
+            Delete
+          </button>
+          <button class="btn btn-primary" type="button" (click)="onClear()">
+            Clear
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -3,7 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  baseUrl: 'https://recipe-book-a30f1-default-rtdb.firebaseio.com/',
+  signUpUrl:
+    'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyChJY7c3sqdwn9If0ZxcA3fDVVwF_G82Xg',
+  signiInUrl:
+    'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyChJY7c3sqdwn9If0ZxcA3fDVVwF_G82Xg',
 };
 
 /*

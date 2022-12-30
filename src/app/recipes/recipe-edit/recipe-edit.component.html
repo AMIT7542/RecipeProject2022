@@ -1,0 +1,173 @@
+<div class="row">
+  <div class="col-xs-12">
+    <form [formGroup]="recipeForm" (submit)="onSubmit()">
+      <div class="row">
+        <div class="col-xs-12">
+          <button
+            type="submit"
+            class="btn btn-success"
+            style="margin: 1%"
+            [disabled]="recipeForm.invalid"
+            *ngIf="!showButton"
+          >
+            Save
+          </button>
+          <button
+            *ngIf="showButton"
+            class="btn btn-success"
+            style="margin: 1%"
+            (click)="enableReceipeForm()"
+          >
+            Edit
+          </button>
+          <button type="button" class="btn btn-danger" (click)="navigate()">
+            Cancel
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label>Name</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="name"
+              (blur)="checkFormValidity()"
+            />
+            <span class="error-mesaage">{{ formErrors["name"] }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label>Image URL</label>
+            <input
+              id="imagePath"
+              class="form-control"
+              formControlName="imagePath"
+              (blur)="checkFormValidity()"
+              #imagePath
+            />
+            <span class="error-mesaage">{{ formErrors["imagePath"] }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <img
+            style="max-height: 200px"
+            class="img-responsive"
+            [src]="imagePath.value"
+          />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea
+              type="text"
+              id="description"
+              class="form-control"
+              rows="6"
+              formControlName="description"
+            ></textarea>
+            <!-- <span class="help-block error-mesaage">{{
+                formErrors?.description
+              }}</span> -->
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12" formArrayName="ingredients">
+          <div
+            *ngFor="let ingredient of controls; let i = index"
+            [formGroupName]="i"
+          >
+            <div class="col-xs-8">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="name"
+              /><label>Name</label>
+              <div>
+                <span
+                  *ngIf="
+                    IngredientAsArray.controls[i].get('name')?.invalid &&
+                    (IngredientAsArray.controls[i].get('name')?.touched ||
+                      IngredientAsArray.controls[i].get('name')?.dirty)
+                  "
+                >
+                  <span
+                    class="error-mesaage"
+                    *ngIf="IngredientAsArray.controls[i].get('name')?.errors?.['required']"
+                  >
+                    Name is required
+                  </span>
+                  <span
+                    class="error-mesaage"
+                    *ngIf="IngredientAsArray.controls[i].get('name')?.errors?.['pattern']"
+                  >
+                    Name should not contain any special character and numbers
+                  </span>
+                </span>
+              </div>
+            </div>
+            <div class="col-xs-2">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="amount"
+              /><label>Amount</label>
+              <span
+                *ngIf="
+                  IngredientAsArray.controls[i].get('amount')?.invalid &&
+                  (IngredientAsArray.controls[i].get('amount')?.touched ||
+                    IngredientAsArray.controls[i].get('amount')?.dirty)
+                "
+              >
+                <span
+                  class="error-mesaage"
+                  *ngIf="IngredientAsArray.controls[i].get('amount')?.errors?.['required']"
+                >
+                  Amount is required
+                </span>
+                <span
+                  class="error-mesaage"
+                  *ngIf="IngredientAsArray.controls[i].get('amount')?.errors?.['pattern']"
+                >
+                  Please Enter Valid Amount
+                </span>
+              </span>
+            </div>
+            <div class="col-xs-2">
+              <button
+                type="button"
+                class="btn btn-danger"
+                (click)="deleteIngredient(i)"
+              >
+                X
+              </button>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div class="row">
+          <div class="col-xs-12" *ngIf="!showButton">
+            <button
+              type="button"
+              class="btn btn-success"
+              (click)="addIngredinets()"
+              [disabled]="recipeForm.get('ingredients')?.invalid"
+            >
+              Add Ingredient
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
